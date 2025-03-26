@@ -1,0 +1,18 @@
+# Using official Python image
+FROM python:3.9-slim
+
+# Setting working directory
+WORKDIR /app
+
+# Copying necessary files
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copying application files
+COPY app.py .
+
+# Exposing port 9567
+EXPOSE 9567
+
+# Running FastAPI app
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "9567"]
