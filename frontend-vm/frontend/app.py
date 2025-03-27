@@ -5,7 +5,7 @@ from fastapi.responses import HTMLResponse
 app = FastAPI()
 
 # Backend API URL 
-BACKEND_URL = "https://34.47.255.91:9567"
+BACKEND_URL = "http://34.47.255.91:9567"
 
 HTML_PAGE = """
 <!DOCTYPE html>
