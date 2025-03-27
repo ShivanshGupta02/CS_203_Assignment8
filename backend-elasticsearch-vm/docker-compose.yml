@@ -10,14 +10,12 @@ services:
     networks:
       - internal_network
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy  # Wait until Elasticsearch is healthy
 
   elasticsearch:
     image: elasticsearch:8.0.0
     container_name: elasticsearch
-    build:
-      context: ./elasticsearch  
-      dockerfile: elasticsearch-dockerfile  
     environment:
       - discovery.type=single-node
     ports:
@@ -26,6 +24,12 @@ services:
       - elasticsearch_data:/usr/share/elasticsearch/data
     networks:
       - internal_network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsSL http://localhost:9200/_cluster/health || exit 1"]
+      interval: 10s
+      retries: 5
+      start_period: 20s
+      timeout: 5s
 
 networks:
   internal_network:
