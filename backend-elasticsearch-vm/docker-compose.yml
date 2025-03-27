@@ -16,6 +16,9 @@ services:
   elasticsearch:
     image: elasticsearch:8.0.0
     container_name: elasticsearch
+    build:
+      context: ./elasticsearch  
+      dockerfile: elasticsearch-dockerfile  
     environment:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
